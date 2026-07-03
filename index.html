@@ -1,102 +1,750 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-br" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="CSS/styles.css" />
+    <title>Davi Moreira — Desenvolvedor Front End</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              mono: ['"IBM Plex Mono"', "monospace"],
+            },
+            colors: {
+              surface: "rgba(255,255,255,0.03)",
+              "surface-hover": "rgba(255,255,255,0.07)",
+              border: "rgba(255,255,255,0.08)",
+              "border-hover": "rgba(255,255,255,0.18)",
+            },
+            backgroundImage: {
+              "bg-texture":
+                "url('assets/Background\\ Texture\\ Modern\\ render\\ empty.jpg')",
+            },
+            keyframes: {
+              fadein: {
+                "0%": { opacity: "0", transform: "translateY(18px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              slidein: {
+                "0%": { opacity: "0", transform: "translateX(-18px)" },
+                "100%": { opacity: "1", transform: "translateX(0)" },
+              },
+            },
+            animation: {
+              fadein: "fadein 0.7s ease forwards",
+              "fadein-slow": "fadein 1s ease 0.2s forwards",
+              slidein: "slidein 0.7s ease 0.1s forwards",
+            },
+          },
+        },
+      };
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"
       rel="stylesheet"
     />
-    <title>Personal Landing page - Davi</title>
-  </head>
-  <body>
-    <header>
-      <nav class="navbar">
-        <div class="nav-container">
-          <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-          <ul class="nav-categories">
-            <li><a href="#about-section">Sobre mim</a></li>
-            <li><a href="#contato-section">Contato</a></li>
-            <li><a href="servicos.html">Outros Serviços</a></li>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      html {
+        scroll-padding-top: 100px;
+      }
+
+      body {
+        background-color: #080808;
+        background-image: url("assets/Background\ Texture\ Modern\ render\ empty.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: "IBM Plex Mono", monospace;
+        color: #ffffff;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(10, 10, 10, 0.75) 0%,
+          rgba(17, 17, 17, 0.75) 50%,
+          rgba(13, 13, 13, 0.75) 100%
+        );
+        z-index: -1;
+      }
+
+      .navbar-glass {
+        background: rgba(8, 8, 8, 0.45);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 36px;
+        background: rgba(255, 255, 255, 0.04);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 100px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .btn-primary:hover {
+        background: #ffffff;
+        color: #080808;
+        border-color: #ffffff;
+        transform: translateY(-2px);
+      }
+
+      .channel-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 16px;
+        padding: 28px;
+        transition:
+          border-color 0.3s ease,
+          background 0.3s ease;
+      }
+      .channel-card:hover {
+        border-color: rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .form-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 20px;
+        padding: 36px;
+        backdrop-filter: blur(8px);
+      }
+
+      .form-input {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 14px 16px;
+        color: #ffffff;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 14px;
+        transition:
+          border-color 0.3s ease,
+          box-shadow 0.3s ease;
+        outline: none;
+      }
+      .form-input::placeholder {
+        color: rgba(255, 255, 255, 0.25);
+      }
+      .form-input:focus {
+        border-color: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
+      }
+
+      .photo-ring {
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow:
+          0 40px 80px rgba(0, 0, 0, 0.7),
+          0 0 0 1px rgba(255, 255, 255, 0.04);
+      }
+
+      .tech-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #e5e5e5;
+        letter-spacing: 0.04em;
+        transition:
+          border-color 0.25s ease,
+          background 0.25s ease;
+      }
+      .tech-pill:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      .divider {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      #mobile-menu {
+        display: none;
+        background: rgba(8, 8, 8, 0.98);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      #mobile-menu.open {
+        display: flex;
+      }
+
+      @media (max-width: 768px) {
+        .photo-ring {
+          width: 260px;
+          height: 260px;
+        }
+        h1 {
+          font-size: clamp(22px, 6vw, 36px) !important;
+          white-space: normal !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header
+      class="fixed top-3 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl z-50"
+    >
+      <nav class="navbar-glass rounded-[50px] px-8 py-4">
+        <div class="flex items-center justify-between">
+          <span
+            class="text-sm font-semibold tracking-widest text-white/60 uppercase"
+          >
+            Moreira<span class="text-white"> </span>Coder
+          </span>
+
+          <ul class="hidden md:flex items-center gap-10 list-none">
+            <li>
+              <a
+                href="#about-section"
+                class="text-[15px] text-white/70 hover:text-white transition-colors duration-200 tracking-wide"
+                >Sobre mim</a
+              >
+            </li>
+            <li>
+              <a
+                href="#contato-section"
+                class="text-[15px] text-white/70 hover:text-white transition-colors duration-200 tracking-wide"
+                >Contato</a
+              >
+            </li>
+            <li>
+              <a
+                href="Other services.html"
+                class="text-[15px] text-white/70 hover:text-white transition-colors duration-200 tracking-wide"
+                >Serviços</a
+              >
+            </li>
           </ul>
 
-          <div class="social-icons">
-            <a href="https://www.linkedin.com/in/seu-perfil" target="_blank">
-              <img src="assets/linkedin icon.png" alt="Linkedin Profile" />
-            </a>
-            <a href="https://www.instagram.com/moreiracoder" target="_blank">
-              <img src="assets/instagram icon.png" alt="Instagram Profile" />
-            </a>
-            <a href="https://github.com/seu-perfil" target="_blank">
-              <img src="assets/github icon.png" alt="Github Profile" />
+          <div class="hidden md:flex items-center gap-5">
+            <a
+              href="https://www.linkedin.com/in/davimoreira05/"
+              target="_blank"
+              class="opacity-60 hover:opacity-100 transition-all duration-200 hover:-translate-y-0.5"
+            >
+              <img
+                src="assets/linkedin icon.png"
+                alt="LinkedIn"
+                class="w-[26px] h-[26px] object-contain"
+              />
             </a>
             <a
-              href="https://www.workana.com/freelancer/seu-perfil"
+              href="https://instagram.com/moreiracoder"
               target="_blank"
+              class="opacity-60 hover:opacity-100 transition-all duration-200 hover:-translate-y-0.5"
             >
-              <img src="assets/logo_workana_1AHRKI.png" alt="Workana Profile" />
+              <img
+                src="assets/instagram icon.png"
+                alt="Instagram"
+                class="w-[26px] h-[26px] object-contain"
+              />
+            </a>
+            <a
+              href="https://github.com/MoreiraCoder"
+              target="_blank"
+              class="opacity-60 hover:opacity-100 transition-all duration-200 hover:-translate-y-0.5"
+            >
+              <img
+                src="assets/github icon.png"
+                alt="GitHub"
+                class="w-[26px] h-[26px] object-contain"
+              />
+            </a>
+            <a
+              href="https://www.workana.com/freelancer/7a23d99eb903e95ad29e2aa2e2a34c8e"
+              target="_blank"
+              class="opacity-60 hover:opacity-100 transition-all duration-200 hover:-translate-y-0.5"
+            >
+              <img
+                src="assets/logo_workana_1AHRKI.png"
+                alt="Workana"
+                class="w-[26px] h-[26px] object-contain"
+              />
             </a>
           </div>
+
+          <button
+            onclick="toggleMenu()"
+            class="md:hidden text-white text-2xl bg-transparent border-0 cursor-pointer"
+          >
+            ☰
+          </button>
         </div>
       </nav>
+
+      <div id="mobile-menu" class="flex-col gap-6 px-8 py-8 mt-2 rounded-2xl">
+        <a
+          href="#about-section"
+          onclick="toggleMenu()"
+          class="text-white/80 text-base tracking-wide hover:text-white transition-colors"
+          >Sobre mim</a
+        >
+        <a
+          href="#contato-section"
+          onclick="toggleMenu()"
+          class="text-white/80 text-base tracking-wide hover:text-white transition-colors"
+          >Contato</a
+        >
+        <a
+          href="Other services.html"
+          class="text-white/80 text-base tracking-wide hover:text-white transition-colors"
+          >Serviços</a
+        >
+        <div class="flex gap-5 pt-2">
+          <a href="https://linkedin.com" target="_blank"
+            ><img
+              src="assets/linkedin icon.png"
+              alt="LinkedIn"
+              class="w-6 h-6 opacity-70"
+          /></a>
+          <a href="https://instagram.com" target="_blank"
+            ><img
+              src="assets/instagram icon.png"
+              alt="Instagram"
+              class="w-6 h-6 opacity-70"
+          /></a>
+          <a href="https://github.com" target="_blank"
+            ><img
+              src="assets/github icon.png"
+              alt="GitHub"
+              class="w-6 h-6 opacity-70"
+          /></a>
+          <a href="https://workana.com" target="_blank"
+            ><img
+              src="assets/logo_workana_1AHRKI.png"
+              alt="Workana"
+              class="w-6 h-6 opacity-70"
+          /></a>
+        </div>
+      </div>
     </header>
 
     <main>
-      <section class="hero" id="home">
-        <div class="hero-text">
-          <h1>Davi Moreira de Sousa Silva</h1>
-          <p class="subtitle">
-            Aqui guardo meu pequeno acervo de projetos WEB. Bem-vindo à minha
-            landing page pessoal! Aqui, compartilho meus projetos e
-            contribuições para organizações sem fins lucrativos, além de algumas
-            iniciativas do meu portfólio profissional. Fique à vontade para
-            explorar e conhecer mais sobre o meu trabalho!
-          </p>
-          <p class="description">
-            Sou um apaixonado por design e desenvolvimento web. Tenho
-            experiência com a criação de sites, otimização de páginas e design
-            responsivo, sempre focado na experiência do usuário.
-          </p>
-          <a href="servicos.html" class="btn">Ver Projetos</a>
-        </div>
-        <div class="hero-foto">
-          <img
-            src="assets/Workana perfil foto(redonda).png"
-            alt="Foto de Davi"
-            class="photo"
-          />
+      <section
+        id="home"
+        class="min-h-screen flex items-center px-[8%] pt-32 pb-20"
+      >
+        <div
+          class="w-full max-w-7xl mx-auto flex items-center justify-between gap-16 flex-wrap lg:flex-nowrap"
+        >
+          <div
+            class="flex flex-col gap-6 max-w-2xl opacity-0 animate-fadein"
+            style="animation-fill-mode: forwards"
+          >
+            <span
+              class="text-xs font-medium tracking-[0.2em] text-white/40 uppercase"
+            >
+              Desenvolvedor Front End
+            </span>
+            <h1
+              class="text-[clamp(36px,4.5vw,58px)] font-bold leading-[1.1] tracking-[-0.03em] text-white"
+            >
+              Davi Moreira
+              <span
+                class="block text-[clamp(20px,2.2vw,28px)] font-normal text-white/50 mt-1"
+              >
+                de Sousa Silva
+              </span>
+            </h1>
+
+            <p
+              class="text-[17px] font-light text-white/60 leading-[1.85] max-w-xl tracking-[-0.01em]"
+            >
+              Desenvolvedor front-end em formação prática, dedicado a construir
+              interfaces modernas e funcionais. Este portfólio reúne projetos
+              pessoais e estudos desenvolvidos para consolidar habilidades.
+            </p>
+
+            <div class="flex flex-wrap gap-3 pt-2">
+              <a href="projetos.html" class="btn-primary">
+                Ver Projetos
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+              <a
+                href="#contato-section"
+                class="btn-primary"
+                style="background: transparent"
+              >
+                Entre em contato
+              </a>
+            </div>
+          </div>
+
+          <div
+            class="flex-shrink-0 flex justify-center opacity-0 animate-fadein-slow"
+            style="animation-fill-mode: forwards"
+          >
+            <div class="relative">
+              <div
+                class="absolute inset-[-20px] rounded-full bg-white/[0.02] blur-2xl"
+              ></div>
+              <img
+                src="assets/workana-perfil.png"
+                alt="Foto de Davi"
+                class="photo-ring relative z-10"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="site-section" id="about-section">
-        <div class="section-content">
-          <h2>Sobre mim</h2>
-          <p>
-            Conte sua história, suas motivações no desenvolvimento web, suas
-            principais competências e seus estudos aqui de forma detalhada.
-          </p>
+      <hr class="divider mx-[8%]" />
+
+      <section id="about-section" class="px-[8%] py-28">
+        <div class="w-full max-w-7xl mx-auto">
+          <div class="reveal">
+            <span
+              class="text-xs font-medium tracking-[0.2em] text-white/30 uppercase block mb-5"
+            >
+              Sobre mim
+            </span>
+            <h2
+              class="text-[clamp(28px,3vw,42px)] font-semibold tracking-[-0.025em] text-white mb-6"
+            >
+              Interfaces que fazem sentido.
+            </h2>
+            <p
+              class="text-[17px] text-white/55 leading-[1.85] font-light max-w-2xl mb-12 tracking-[-0.01em]"
+            >
+              Sou um desenvolvedor front end focado em criar interfaces
+              modernas, rápidas e acessíveis — intuitivas e de fácil
+              entendimento ao usuário.
+            </p>
+          </div>
+
+          <div class="reveal flex flex-col lg:flex-row gap-16 items-start">
+            <div class="flex-shrink-0">
+              <p class="text-xs tracking-[0.15em] text-white/30 uppercase mb-5">
+                Stack
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="tech-pill">
+                  <img src="assets/html.svg" alt="" class="w-4 h-4" />HTML
+                </span>
+                <span class="tech-pill">
+                  <img src="assets/css.svg" alt="" class="w-4 h-4" />CSS
+                </span>
+                <span class="tech-pill">
+                  <img
+                    src="assets/javascript.svg"
+                    alt=""
+                    class="w-4 h-4"
+                  />JavaScript
+                </span>
+                <span class="tech-pill">
+                  <img
+                    src="assets/Tailwind_CSS_Logo.svg.webp"
+                    alt=""
+                    class="w-4 h-auto"
+                  />Tailwind
+                </span>
+              </div>
+            </div>
+
+            <div class="max-w-xl">
+              <p
+                class="text-[16px] text-white/50 leading-[1.9] font-light tracking-[-0.01em] text-justify"
+              >
+                Minha trajetória no desenvolvimento web começou de forma
+                autodidata, focando na prática por meio de projetos pessoais e
+                na criação de páginas para iniciativas locais. Busco construir
+                interfaces que resolvam problemas reais de navegação, unindo
+                código limpo e layouts responsivos.
+              </p>
+            </div>
+          </div>
+
+          <div class="reveal mt-12">
+            <a
+              href="assets/Curriculum Davi Moreira Atualizado 2025.docx"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary"
+            >
+              Visualizar Currículo
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
 
-      <section class="site-section" id="contato-section">
-        <div class="section-content">
-          <h2>Contato</h2>
-          <p>
-            Disponibilize um formulário de mensagens, e-mail ou links diretos
-            para as suas redes de atendimento profissional.
-          </p>
+      <hr class="divider mx-[8%]" />
+
+      <section id="contato-section" class="px-[8%] py-28">
+        <div class="w-full max-w-7xl mx-auto">
+          <div class="reveal">
+            <span
+              class="text-xs font-medium tracking-[0.2em] text-white/30 uppercase block mb-5"
+            >
+              Contato
+            </span>
+            <h2
+              class="text-[clamp(28px,3vw,42px)] font-semibold tracking-[-0.025em] text-white mb-4"
+            >
+              Tem um projeto em mente?
+            </h2>
+            <p
+              class="text-[17px] text-white/50 font-light leading-[1.85] mb-14 max-w-xl"
+            >
+              Envie uma mensagem diretamente ou use os canais abaixo.
+            </p>
+          </div>
+
+          <div class="reveal flex flex-col lg:flex-row gap-12 items-start">
+            <div class="form-card flex-1 flex flex-col gap-5">
+              <form
+                action="https://formsubmit.co/davimcoder@gmail.com"
+                method="POST"
+                class="flex flex-col gap-5"
+              >
+                <input type="hidden" name="_captcha" value="false" />
+                <input
+                  type="hidden"
+                  name="_next"
+                  value="https://seusite.github.io"
+                />
+
+                <div class="flex flex-col gap-2">
+                  <label
+                    for="name"
+                    class="text-xs font-medium text-white/40 uppercase tracking-widest"
+                    >Nome</label
+                  >
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    required
+                    placeholder="Seu nome ou empresa"
+                    class="form-input"
+                  />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <label
+                    for="email"
+                    class="text-xs font-medium text-white/40 uppercase tracking-widest"
+                    >E-mail</label
+                  >
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    required
+                    placeholder="seu@email.com"
+                    class="form-input"
+                  />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <label
+                    for="message"
+                    class="text-xs font-medium text-white/40 uppercase tracking-widest"
+                    >Mensagem</label
+                  >
+                  <textarea
+                    name="message"
+                    id="message"
+                    rows="5"
+                    required
+                    placeholder="Como posso ajudar no seu projeto?"
+                    class="form-input resize-none"
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary mt-2 self-start">
+                  Enviar Mensagem
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                  </svg>
+                </button>
+              </form>
+            </div>
+
+            <div class="flex flex-col gap-5 lg:w-[340px] w-full">
+              <div class="channel-card">
+                <p
+                  class="text-xs tracking-[0.15em] text-white/30 uppercase mb-3"
+                >
+                  Atendimento rápido
+                </p>
+                <h3 class="text-[16px] font-semibold text-white mb-2">
+                  WhatsApp
+                </h3>
+                <p class="text-[14px] text-white/45 leading-relaxed mb-4">
+                  Para respostas imediatas, me chame no WhatsApp.
+                </p>
+                <a
+                  href="https://wa.me/5586994219032"
+                  target="_blank"
+                  class="text-[13px] font-medium text-white/70 hover:text-white transition-colors tracking-wide"
+                >
+                  Abrir conversa →
+                </a>
+              </div>
+
+              <div class="channel-card">
+                <p
+                  class="text-xs tracking-[0.15em] text-white/30 uppercase mb-3"
+                >
+                  E-mail oficial
+                </p>
+                <h3 class="text-[16px] font-semibold text-white mb-2">
+                  davimcoder@gmail.com
+                </h3>
+                <p class="text-[14px] text-white/45 leading-relaxed mb-4">
+                  Para propostas formais ou projetos mais detalhados.
+                </p>
+                <a
+                  href="mailto:davimcoder@gmail.com"
+                  class="text-[13px] font-medium text-white/70 hover:text-white transition-colors tracking-wide"
+                >
+                  Enviar e-mail →
+                </a>
+              </div>
+
+              <div
+                class="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02]"
+              >
+                <span
+                  class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"
+                ></span>
+                <span class="text-[13px] text-white/50 font-light"
+                  >Disponível para novos projetos</span
+                >
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer class="main-footer">
-      <p>&copy; 2026 MoreiraCoder. Todos os direitos reservados.</p>
+    <footer
+      class="text-center py-12 px-8 border-t border-white/[0.04] bg-[#040404]"
+    >
+      <p class="text-[12px] text-white/20 tracking-[0.08em] uppercase">
+        &copy; 2026 MoreiraCoder — Todos os direitos reservados
+      </p>
     </footer>
 
-    <script src="JavaScript/script.js"></script>
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("open");
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+
+      const navbar = document.querySelector("nav");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 60) {
+          navbar.style.padding = "10px 32px";
+        } else {
+          navbar.style.padding = "16px 32px";
+        }
+      });
+    </script>
   </body>
 </html>

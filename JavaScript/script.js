@@ -1,4 +1,4 @@
-// 1. FUNÇÃO DO MENU MOBILE (Mantida e melhorada)
+
 function toggleMenu() {
   const menu = document.querySelector('.nav-categories');
   const icons = document.querySelector('.social-icons');
@@ -7,40 +7,34 @@ function toggleMenu() {
   icons.classList.toggle('ativo');
 }
 
-// Fechar o menu mobile automaticamente ao clicar em qualquer link dele
+
 document.querySelectorAll('.nav-categories a').forEach(link => {
   link.addEventListener('click', () => {
     const menu = document.querySelector('.nav-categories');
     const icons = document.querySelector('.social-icons');
     
-    // Remove a classe ativo se ela estiver presente
     menu.classList.remove('ativo');
     icons.classList.remove('ativo');
   });
 });
 
 
-// 2. DINÂMICA DA NAVBAR AO ROLAR (Muda o fundo)
 window.addEventListener('scroll', () => {
   const navbar = document.querySelector('.navbar');
   
-  // Se rolar mais de 20 pixels, adiciona uma classe para mudar o estilo
   if (window.scrollY > 20) {
     navbar.style.backgroundColor = 'rgba(11, 11, 11, 0.85)';
     navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
   } else {
-    // Volta ao estado inicial transparente quando estiver no topo
     navbar.style.backgroundColor = 'rgba(11, 11, 11, 0.4)';
     navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.05)';
   }
 });
 
 
-// 3. EFEITO DE REVELAÇÃO SUAVE (Scroll Reveal nativo)
-// Configura o observador para detectar quando as seções aparecem na tela
 const observerOptions = {
   root: null,
-  threshold: 0.15 // Dispara o efeito quando 15% da seção estiver visível
+  threshold: 0.15 
 };
 
 const revealObserver = new IntersectionObserver((entries) => {
@@ -48,24 +42,57 @@ const revealObserver = new IntersectionObserver((entries) => {
     if (entry.isIntersecting) {
       entry.target.style.opacity = '1';
       entry.target.style.transform = 'translateY(0)';
-      // Opcional: remove o observador após revelar para performance
+      
+      
       revealObserver.unobserve(entry.target);
     }
   });
 }, observerOptions);
 
-// Aplica o efeito inicial de esconder e observa os elementos ao carregar a página
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Elementos que vão surgir (Textos do hero, foto e títulos das seções)
-  const elementsToReveal = document.querySelectorAll('.hero-text, .hero-foto, .site-section h2, .site-section p');
+  
+ 
+  const elementsToReveal = document.querySelectorAll('.hero-text, .hero-foto, .site-section h2, .site-section p, .tech-pillar, .actions');
   
   elementsToReveal.forEach(el => {
-    // Define o estado escondido por CSS inline temporário
     el.style.opacity = '0';
     el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    el.style.transition = 'opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     
-    // Começa a observar o elemento
     revealObserver.observe(el);
   });
+
+
+  const nameElement = document.querySelector('h1');
+  if (nameElement) {
+    const nameText = nameElement.innerHTML;
+    nameElement.innerHTML = ''; 
+    nameElement.style.borderRight = '2px solid rgba(255, 255, 255, 0.75)'; 
+    nameElement.style.width = 'fit-content';
+    
+
+    const style = document.createElement('style');
+    style.innerHTML = `@keyframes blink { 50% { border-color: transparent; } }`;
+    document.head.appendChild(style);
+    nameElement.style.animation = 'blink 0.75s step-end infinite';
+
+    let index = 0;
+    function typeEffect() {
+      if (index < nameText.length) {
+        nameElement.innerHTML += nameText.charAt(index);
+        index++;
+        setTimeout(typeEffect, 60); 
+      } else {
+        
+        setTimeout(() => {
+          nameElement.style.borderRight = 'none';
+          nameElement.style.animation = 'none';
+        }, 2000);
+      }
+    }
+    
+    
+    setTimeout(typeEffect, 400);
+  }
 });

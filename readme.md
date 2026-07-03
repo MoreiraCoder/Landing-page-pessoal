@@ -1,1 +1,1 @@
-MERAMENTE SIMBOLICO - ao menos por enquanto.
+Gostou do que viu? fale comigo plsee (davimcoder@gmail.com)
