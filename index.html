@@ -1,750 +1,509 @@
-<!doctype html>
-<html lang="pt-br" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Davi Moreira — Desenvolvedor Front End</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              mono: ['"IBM Plex Mono"', "monospace"],
-            },
-            colors: {
-              surface: "rgba(255,255,255,0.03)",
-              "surface-hover": "rgba(255,255,255,0.07)",
-              border: "rgba(255,255,255,0.08)",
-              "border-hover": "rgba(255,255,255,0.18)",
-            },
-            backgroundImage: {
-              "bg-texture":
-                "url('assets/Background\\ Texture\\ Modern\\ render\\ empty.jpg')",
-            },
-            keyframes: {
-              fadein: {
-                "0%": { opacity: "0", transform: "translateY(18px)" },
-                "100%": { opacity: "1", transform: "translateY(0)" },
-              },
-              slidein: {
-                "0%": { opacity: "0", transform: "translateX(-18px)" },
-                "100%": { opacity: "1", transform: "translateX(0)" },
-              },
-            },
-            animation: {
-              fadein: "fadein 0.7s ease forwards",
-              "fadein-slow": "fadein 1s ease 0.2s forwards",
-              slidein: "slidein 0.7s ease 0.1s forwards",
-            },
-          },
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moreiracoder — Desenvolvedor Front-end</title>
+<meta name="description" content="Portfólio de Davi Moreira (Moreiracoder), desenvolvedor front-end.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: '#09090B',
+          card: '#18181B',
+          card2: '#141417',
+          border: '#26262A',
+          fg: '#FAFAFA',
+          muted: '#9C9CA3',
+          accent: '#8B5CF6',
+          accent2: '#A78BFA',
         },
-      };
-    </script>
+        fontFamily: {
+          display: ['Manrope', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+        },
+        maxWidth: { '8xl': '1440px' }
+      }
+    }
+  }
+</script>
+<style>
+  * { scroll-behavior: smooth; }
+  body {
+    background-color: #09090B;
+    color: #FAFAFA;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"
-      rel="stylesheet"
-    />
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(250,250,250,0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(250,250,250,0.03) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 35%, transparent 100%);
+  }
+  .glow-soft {
+    background: radial-gradient(circle, rgba(139,92,246,0.16) 0%, rgba(139,92,246,0) 70%);
+    filter: blur(70px);
+  }
 
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        -webkit-font-smoothing: antialiased;
-      }
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
 
-      html {
-        scroll-padding-top: 100px;
-      }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    * { animation: none !important; }
+  }
 
-      body {
-        background-color: #080808;
-        background-image: url("assets/Background\ Texture\ Modern\ render\ empty.jpg");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        font-family: "IBM Plex Mono", monospace;
-        color: #ffffff;
-        min-height: 100vh;
-        overflow-x: hidden;
-      }
+  .card-hover { transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), border-color 0.35s ease; }
+  .card-hover:hover { transform: translateY(-3px); border-color: rgba(139,92,246,0.4); }
+  .btn-primary { background: #8B5CF6; transition: background 0.25s ease, transform 0.25s ease; }
+  .btn-primary:hover { background: #7C3AED; transform: translateY(-1px); }
+  .btn-ghost { transition: all 0.25s ease; }
+  .btn-ghost:hover { border-color: #8B5CF6; color: #FAFAFA; }
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; bottom: -4px;
+    width: 0; height: 1px; background: #8B5CF6; transition: width 0.25s ease;
+  }
+  .nav-link:hover::after { width: 100%; }
 
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background: linear-gradient(
-          135deg,
-          rgba(10, 10, 10, 0.75) 0%,
-          rgba(17, 17, 17, 0.75) 50%,
-          rgba(13, 13, 13, 0.75) 100%
-        );
-        z-index: -1;
-      }
+  .glass-nav {
+    background: rgba(9,9,11,0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
 
-      .navbar-glass {
-        background: rgba(8, 8, 8, 0.45);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-      }
+  input:focus, textarea:focus {
+    outline: none; border-color: #8B5CF6; box-shadow: 0 0 0 3px rgba(139,92,246,0.12);
+  }
+  :focus-visible { outline: 2px solid #8B5CF6; outline-offset: 3px; }
+  ::selection { background: rgba(139,92,246,0.3); color: #FAFAFA; }
+  .eyebrow { letter-spacing: 0.12em; }
+  .tech-cell { transition: transform 0.25s ease, border-color 0.25s ease; }
+  .tech-cell:hover { transform: translateY(-2px); border-color: rgba(139,92,246,0.4); }
 
-      .btn-primary {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 14px 36px;
-        background: rgba(255, 255, 255, 0.04);
-        color: #ffffff;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 100px;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 14px;
-        font-weight: 500;
-        letter-spacing: 0.04em;
-        text-decoration: none;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      }
-      .btn-primary:hover {
-        background: #ffffff;
-        color: #080808;
-        border-color: #ffffff;
-        transform: translateY(-2px);
-      }
+  /* ---------- Hero art: constelação + foto ---------- */
+  .line-draw {
+    stroke-dasharray: 260;
+    stroke-dashoffset: 260;
+    animation: draw 1.8s ease forwards;
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
 
-      .channel-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 16px;
-        padding: 28px;
-        transition:
-          border-color 0.3s ease,
-          background 0.3s ease;
-      }
-      .channel-card:hover {
-        border-color: rgba(255, 255, 255, 0.15);
-        background: rgba(255, 255, 255, 0.05);
-      }
+  .node { animation: pulse-node 3.2s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+  .node-d2 { animation-delay: .5s; }
+  .node-d3 { animation-delay: 1s; }
+  .node-d4 { animation-delay: 1.5s; }
+  .node-d5 { animation-delay: 2s; }
+  @keyframes pulse-node {
+    0%, 100% { opacity: .6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.35); }
+  }
 
-      .form-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 20px;
-        padding: 36px;
-        backdrop-filter: blur(8px);
-      }
+  .float-slow { animation: float 6s ease-in-out infinite; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 
-      .form-input {
-        width: 100%;
-        background: rgba(0, 0, 0, 0.35);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        padding: 14px 16px;
-        color: #ffffff;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 14px;
-        transition:
-          border-color 0.3s ease,
-          box-shadow 0.3s ease;
-        outline: none;
-      }
-      .form-input::placeholder {
-        color: rgba(255, 255, 255, 0.25);
-      }
-      .form-input:focus {
-        border-color: rgba(255, 255, 255, 0.35);
-        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
-      }
+  .hero-art { animation: hero-fade-in 1s ease forwards; }
+  @keyframes hero-fade-in { from { opacity: 0; } to { opacity: 1; } }
 
-      .photo-ring {
-        width: 400px;
-        height: 400px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        box-shadow:
-          0 40px 80px rgba(0, 0, 0, 0.7),
-          0 0 0 1px rgba(255, 255, 255, 0.04);
-      }
+  @media (prefers-reduced-motion: reduce) {
+    .line-draw { stroke-dashoffset: 0; animation: none; }
+    .node, .float-slow, .hero-art { animation: none; }
+  }
+</style>
+</head>
+<body class="bg-bg text-fg font-body overflow-x-hidden">
 
-      .tech-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 100px;
-        font-size: 13px;
-        font-weight: 500;
-        color: #e5e5e5;
-        letter-spacing: 0.04em;
-        transition:
-          border-color 0.25s ease,
-          background 0.25s ease;
-      }
-      .tech-pill:hover {
-        border-color: rgba(255, 255, 255, 0.2);
-        background: rgba(255, 255, 255, 0.07);
-      }
+<!-- ============ NAVBAR ============ -->
+<header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-border/60">
+  <nav class="max-w-8xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+    <a href="#home" class="font-display font-bold text-lg tracking-tight">
+      Moreira<span class="text-accent">Coder</span>
+    </a>
+    <div class="hidden md:flex items-center gap-10 text-sm text-muted">
+      <a href="#home" class="nav-link hover:text-fg transition-colors">Home</a>
+      <a href="#sobre" class="nav-link hover:text-fg transition-colors">Sobre</a>
+      <a href="#projetos" class="nav-link hover:text-fg transition-colors">Projetos</a>
+      <a href="#tecnologias" class="nav-link hover:text-fg transition-colors">Tecnologias</a>
+      <a href="#contato" class="nav-link hover:text-fg transition-colors">Contato</a>
+    </div>
+    <a href="#contato" class="btn-primary text-fg text-sm font-medium px-5 py-2.5 rounded-full hidden sm:inline-block">
+      Vamos conversar
+    </a>
+    <button id="menuBtn" class="md:hidden text-fg" aria-label="Abrir menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </nav>
+  <div id="mobileMenu" class="hidden md:hidden border-t border-border/60 px-6 py-5 flex flex-col gap-4 text-sm text-muted glass-nav">
+    <a href="#home" class="hover:text-fg">Home</a>
+    <a href="#sobre" class="hover:text-fg">Sobre</a>
+    <a href="#projetos" class="hover:text-fg">Projetos</a>
+    <a href="#tecnologias" class="hover:text-fg">Tecnologias</a>
+    <a href="#contato" class="hover:text-fg">Contato</a>
+  </div>
+</header>
 
-      .divider {
-        border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-      }
+<!-- ============ HERO ============ -->
+<section id="home" class="relative pt-40 pb-24 md:pt-48 md:pb-32 px-6 md:px-12 overflow-hidden">
+  <div class="absolute inset-0 bg-grid pointer-events-none"></div>
+  <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[420px] glow-soft pointer-events-none"></div>
 
-      .reveal {
-        opacity: 0;
-        transform: translateY(20px);
-        transition:
-          opacity 0.7s ease,
-          transform 0.7s ease;
-      }
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
+  <div class="max-w-8xl mx-auto relative grid md:grid-cols-12 gap-10 items-center">
+    <div class="reveal in-view md:col-span-7">
+      <h1 class="font-display font-extrabold text-[2.6rem] leading-[1.08] sm:text-5xl md:text-6xl md:leading-[1.05] tracking-tight mb-6">
+        Davi Moreira
+      </h1>
+      <p class="text-lg md:text-xl text-muted mb-7">Desenvolvedor Front-end</p>
+      <p class="text-muted text-base md:text-lg leading-relaxed max-w-2xl mb-10">
+        [Escreva aqui uma descrição curta e objetiva sobre o que você faz —
+        por exemplo, o tipo de projeto que desenvolve e as tecnologias que
+        utiliza no dia a dia.]
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a href="#contato" class="btn-primary text-fg font-medium px-8 py-3.5 rounded-full text-sm">
+          Vamos conversar
+        </a>
+      </div>
+    </div>
 
-      #mobile-menu {
-        display: none;
-        background: rgba(8, 8, 8, 0.98);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      }
-      #mobile-menu.open {
-        display: flex;
-      }
+    <!-- Visual: constellation + espaço para foto -->
+    <div class="reveal reveal-delay-2 md:col-span-5 flex justify-center md:justify-end">
+      <div class="hero-art relative w-full max-w-[380px] aspect-square">
+        <!-- glow atrás -->
+        <div class="absolute inset-0 glow-soft scale-90"></div>
 
-      @media (max-width: 768px) {
-        .photo-ring {
-          width: 260px;
-          height: 260px;
-        }
-        h1 {
-          font-size: clamp(22px, 6vw, 36px) !important;
-          white-space: normal !important;
-        }
-      }
-    </style>
-  </head>
+        <!-- moldura giratória sutil -->
+        <div class="absolute inset-[6%] rounded-[28px] border border-border/80"></div>
+        <div class="absolute inset-[14%] rounded-[22px] border border-border/60 rotate-6"></div>
 
-  <body>
-    <header
-      class="fixed top-3 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl z-50"
-    >
-      <nav class="navbar-glass rounded-[50px] px-8 py-4">
-        <div class="flex items-center justify-between">
-          <span
-            class="text-sm font-semibold tracking-widest text-white/60 uppercase"
-          >
-            Moreira<span class="text-white"> </span>Coder
-          </span>
+        <!-- constelação SVG -->
+        <svg viewBox="0 0 380 380" class="absolute inset-0 w-full h-full">
+          <defs>
+            <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.75"/>
+              <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.15"/>
+            </linearGradient>
+            <radialGradient id="nodeGlow">
+              <stop offset="0%" stop-color="#C4B5FD"/>
+              <stop offset="100%" stop-color="#8B5CF6"/>
+            </radialGradient>
+          </defs>
 
-          <ul class="hidden md:flex items-center gap-10 list-none">
-            <li>
-              <a
-                href="#about-section"
-                class="text-[15px] text-white/70 hover:text-white transition-colors duration-200 tracking-wide"
-                >Sobre mim</a
-              >
-            </li>
-            <li>
-              <a
-                href="#contato-section"
-                class="text-[15px] text-white/70 hover:text-white transition-colors duration-200 tracking-wide"
-                >Contato</a
-              >
-            </li>
-            <li>
-              <a
-                href="Other services.html"
-                class="text-[15px] text-white/70 hover:text-white transition-colors duration-200 tracking-wide"
-                >Serviços</a
-              >
-            </li>
-          </ul>
+          <g class="const-lines" stroke="url(#lineGrad)" stroke-width="1.4" fill="none">
+            <path class="line-draw" d="M90 120 L190 80 L285 135"/>
+            <path class="line-draw" d="M190 80 L178 190" style="animation-delay:.25s"/>
+            <path class="line-draw" d="M90 120 L100 265 L178 190 L260 300" style="animation-delay:.45s"/>
+            <path class="line-draw" d="M285 135 L260 300" style="animation-delay:.65s"/>
+            <path class="line-draw" d="M100 265 L60 320 M260 300 L300 330" style="animation-delay:.85s"/>
+          </g>
 
-          <div class="hidden md:flex items-center gap-5">
-            <a
-              href="https://www.linkedin.com/in/davimoreira05/"
-              target="_blank"
-              class="opacity-60 hover:opacity-100 transition-all duration-200 hover:-translate-y-0.5"
-            >
-              <img
-                src="assets/linkedin icon.png"
-                alt="LinkedIn"
-                class="w-[26px] h-[26px] object-contain"
-              />
-            </a>
-            <a
-              href="https://instagram.com/moreiracoder"
-              target="_blank"
-              class="opacity-60 hover:opacity-100 transition-all duration-200 hover:-translate-y-0.5"
-            >
-              <img
-                src="assets/instagram icon.png"
-                alt="Instagram"
-                class="w-[26px] h-[26px] object-contain"
-              />
-            </a>
-            <a
-              href="https://github.com/MoreiraCoder"
-              target="_blank"
-              class="opacity-60 hover:opacity-100 transition-all duration-200 hover:-translate-y-0.5"
-            >
-              <img
-                src="assets/github icon.png"
-                alt="GitHub"
-                class="w-[26px] h-[26px] object-contain"
-              />
-            </a>
-            <a
-              href="https://www.workana.com/freelancer/7a23d99eb903e95ad29e2aa2e2a34c8e"
-              target="_blank"
-              class="opacity-60 hover:opacity-100 transition-all duration-200 hover:-translate-y-0.5"
-            >
-              <img
-                src="assets/logo_workana_1AHRKI.png"
-                alt="Workana"
-                class="w-[26px] h-[26px] object-contain"
-              />
-            </a>
+          <g class="const-nodes">
+            <circle class="node" cx="90" cy="120" r="4.5" fill="url(#nodeGlow)"/>
+            <circle class="node node-d2" cx="190" cy="80" r="4.5" fill="url(#nodeGlow)"/>
+            <circle class="node node-d3" cx="285" cy="135" r="4.5" fill="url(#nodeGlow)"/>
+            <circle class="node node-d4" cx="100" cy="265" r="4" fill="url(#nodeGlow)"/>
+            <circle class="node node-d5" cx="178" cy="190" r="4" fill="url(#nodeGlow)"/>
+            <circle class="node node-d2" cx="260" cy="300" r="4" fill="url(#nodeGlow)"/>
+            <circle class="node node-d4" cx="60" cy="320" r="3" fill="url(#nodeGlow)"/>
+            <circle class="node node-d3" cx="300" cy="330" r="3" fill="url(#nodeGlow)"/>
+          </g>
+        </svg>
+
+        <!-- espaço para a foto, sobreposto à constelação -->
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="photo-slot float-slow relative w-[44%] aspect-square rounded-full border-2 border-dashed border-accent/50 bg-card/70 backdrop-blur-sm flex flex-col items-center justify-center gap-2 text-center px-4">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.6"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.2-2h5.6L16 6"/></svg>
+            <span class="text-[11px] text-muted leading-tight">[Sua foto aqui]</span>
           </div>
-
-          <button
-            onclick="toggleMenu()"
-            class="md:hidden text-white text-2xl bg-transparent border-0 cursor-pointer"
-          >
-            ☰
-          </button>
-        </div>
-      </nav>
-
-      <div id="mobile-menu" class="flex-col gap-6 px-8 py-8 mt-2 rounded-2xl">
-        <a
-          href="#about-section"
-          onclick="toggleMenu()"
-          class="text-white/80 text-base tracking-wide hover:text-white transition-colors"
-          >Sobre mim</a
-        >
-        <a
-          href="#contato-section"
-          onclick="toggleMenu()"
-          class="text-white/80 text-base tracking-wide hover:text-white transition-colors"
-          >Contato</a
-        >
-        <a
-          href="Other services.html"
-          class="text-white/80 text-base tracking-wide hover:text-white transition-colors"
-          >Serviços</a
-        >
-        <div class="flex gap-5 pt-2">
-          <a href="https://linkedin.com" target="_blank"
-            ><img
-              src="assets/linkedin icon.png"
-              alt="LinkedIn"
-              class="w-6 h-6 opacity-70"
-          /></a>
-          <a href="https://instagram.com" target="_blank"
-            ><img
-              src="assets/instagram icon.png"
-              alt="Instagram"
-              class="w-6 h-6 opacity-70"
-          /></a>
-          <a href="https://github.com" target="_blank"
-            ><img
-              src="assets/github icon.png"
-              alt="GitHub"
-              class="w-6 h-6 opacity-70"
-          /></a>
-          <a href="https://workana.com" target="_blank"
-            ><img
-              src="assets/logo_workana_1AHRKI.png"
-              alt="Workana"
-              class="w-6 h-6 opacity-70"
-          /></a>
         </div>
       </div>
-    </header>
+    </div>
+  </div>
+</section>
 
-    <main>
-      <section
-        id="home"
-        class="min-h-screen flex items-center px-[8%] pt-32 pb-20"
-      >
-        <div
-          class="w-full max-w-7xl mx-auto flex items-center justify-between gap-16 flex-wrap lg:flex-nowrap"
-        >
-          <div
-            class="flex flex-col gap-6 max-w-2xl opacity-0 animate-fadein"
-            style="animation-fill-mode: forwards"
-          >
-            <span
-              class="text-xs font-medium tracking-[0.2em] text-white/40 uppercase"
-            >
-              Desenvolvedor Front End
-            </span>
-            <h1
-              class="text-[clamp(36px,4.5vw,58px)] font-bold leading-[1.1] tracking-[-0.03em] text-white"
-            >
-              Davi Moreira
-              <span
-                class="block text-[clamp(20px,2.2vw,28px)] font-normal text-white/50 mt-1"
-              >
-                de Sousa Silva
-              </span>
-            </h1>
+<!-- ============ SOBRE ============ -->
+<section id="sobre" class="relative py-24 md:py-28 px-6 md:px-12 border-t border-border/60">
+  <div class="max-w-8xl mx-auto">
+    <div class="grid md:grid-cols-12 gap-10">
+      <div class="md:col-span-4 reveal">
+        <p class="eyebrow text-accent2 text-xs uppercase mb-3">Sobre</p>
+        <h2 class="font-display font-bold text-3xl md:text-4xl tracking-tight">
+          Sobre mim
+        </h2>
+      </div>
 
-            <p
-              class="text-[17px] font-light text-white/60 leading-[1.85] max-w-xl tracking-[-0.01em]"
-            >
-              Desenvolvedor front-end em formação prática, dedicado a construir
-              interfaces modernas e funcionais. Este portfólio reúne projetos
-              pessoais e estudos desenvolvidos para consolidar habilidades.
-            </p>
+      <div class="md:col-span-7 md:col-start-6 reveal reveal-delay-1">
+        <p class="text-muted text-base md:text-lg leading-relaxed max-w-2xl">
+          [Escreva aqui uma apresentação curta e objetiva sobre sua trajetória
+          — formação, tipo de trabalho que realiza e como atua nos projetos.
+          Utilize apenas informações reais.]
+        </p>
 
-            <div class="flex flex-wrap gap-3 pt-2">
-              <a href="projetos.html" class="btn-primary">
-                Ver Projetos
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </a>
-              <a
-                href="#contato-section"
-                class="btn-primary"
-                style="background: transparent"
-              >
-                Entre em contato
-              </a>
-            </div>
-          </div>
-
-          <div
-            class="flex-shrink-0 flex justify-center opacity-0 animate-fadein-slow"
-            style="animation-fill-mode: forwards"
-          >
-            <div class="relative">
-              <div
-                class="absolute inset-[-20px] rounded-full bg-white/[0.02] blur-2xl"
-              ></div>
-              <img
-                src="assets/workana-perfil.png"
-                alt="Foto de Davi"
-                class="photo-ring relative z-10"
-              />
-            </div>
-          </div>
+        <div class="mt-10 flex flex-wrap gap-2.5">
+          <span class="text-xs px-3 py-1.5 rounded-full border border-border text-muted">[Habilidade 1]</span>
+          <span class="text-xs px-3 py-1.5 rounded-full border border-border text-muted">[Habilidade 2]</span>
+          <span class="text-xs px-3 py-1.5 rounded-full border border-border text-muted">[Habilidade 3]</span>
+          <span class="text-xs px-3 py-1.5 rounded-full border border-border text-muted">[Habilidade 4]</span>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <hr class="divider mx-[8%]" />
+<!-- ============ PROJETOS ============ -->
+<section id="projetos" class="relative py-24 md:py-28 px-6 md:px-12 border-t border-border/60">
+  <div class="max-w-8xl mx-auto">
+    <div class="reveal mb-14 md:mb-16 max-w-2xl">
+      <p class="eyebrow text-accent2 text-xs uppercase mb-3">Projetos</p>
+      <h2 class="font-display font-bold text-3xl md:text-4xl tracking-tight mb-4">Projetos</h2>
+      <p class="text-muted leading-relaxed">
+        [Descrição curta opcional sobre o tipo de projetos apresentados
+        abaixo.]
+      </p>
+    </div>
 
-      <section id="about-section" class="px-[8%] py-28">
-        <div class="w-full max-w-7xl mx-auto">
-          <div class="reveal">
-            <span
-              class="text-xs font-medium tracking-[0.2em] text-white/30 uppercase block mb-5"
-            >
-              Sobre mim
-            </span>
-            <h2
-              class="text-[clamp(28px,3vw,42px)] font-semibold tracking-[-0.025em] text-white mb-6"
-            >
-              Interfaces que fazem sentido.
-            </h2>
-            <p
-              class="text-[17px] text-white/55 leading-[1.85] font-light max-w-2xl mb-12 tracking-[-0.01em]"
-            >
-              Sou um desenvolvedor front end focado em criar interfaces
-              modernas, rápidas e acessíveis — intuitivas e de fácil
-              entendimento ao usuário.
-            </p>
+    <div class="grid gap-6">
+      <article class="reveal reveal-delay-1 group rounded-2xl border border-border bg-card/50 overflow-hidden card-hover grid md:grid-cols-2">
+        <div class="h-56 md:h-auto relative overflow-hidden bg-card2 order-1">
+          <div class="absolute inset-0 bg-gradient-to-br from-accent/15 via-transparent to-transparent"></div>
+          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="260" fill="#141417"/>
+            <g opacity="0.45" stroke="#8B5CF6" stroke-width="1">
+              <path d="M60 200 L130 90 L200 200 Z" fill="none"/>
+              <circle cx="300" cy="100" r="34" fill="none"/>
+              <rect x="260" y="160" width="90" height="50" rx="4" fill="none"/>
+            </g>
+          </svg>
+        </div>
+        <div class="p-8 md:p-10 flex flex-col justify-center order-2">
+          <h3 class="font-display font-semibold text-xl md:text-2xl mb-3">Ofício</h3>
+          <p class="text-muted text-sm md:text-base leading-relaxed mb-5">
+            Landing page para ateliê de móveis, com seletor de acabamentos
+            em tempo real e ilustrações em SVG.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-[11px] uppercase px-2.5 py-1 rounded-full border border-border text-muted">HTML</span>
+            <span class="text-[11px] uppercase px-2.5 py-1 rounded-full border border-border text-muted">CSS</span>
+            <span class="text-[11px] uppercase px-2.5 py-1 rounded-full border border-border text-muted">JavaScript</span>
           </div>
-
-          <div class="reveal flex flex-col lg:flex-row gap-16 items-start">
-            <div class="flex-shrink-0">
-              <p class="text-xs tracking-[0.15em] text-white/30 uppercase mb-5">
-                Stack
-              </p>
-              <div class="flex flex-wrap gap-2">
-                <span class="tech-pill">
-                  <img src="assets/html.svg" alt="" class="w-4 h-4" />HTML
-                </span>
-                <span class="tech-pill">
-                  <img src="assets/css.svg" alt="" class="w-4 h-4" />CSS
-                </span>
-                <span class="tech-pill">
-                  <img
-                    src="assets/javascript.svg"
-                    alt=""
-                    class="w-4 h-4"
-                  />JavaScript
-                </span>
-                <span class="tech-pill">
-                  <img
-                    src="assets/Tailwind_CSS_Logo.svg.webp"
-                    alt=""
-                    class="w-4 h-auto"
-                  />Tailwind
-                </span>
-              </div>
-            </div>
-
-            <div class="max-w-xl">
-              <p
-                class="text-[16px] text-white/50 leading-[1.9] font-light tracking-[-0.01em] text-justify"
-              >
-                Minha trajetória no desenvolvimento web começou de forma
-                autodidata, focando na prática por meio de projetos pessoais e
-                na criação de páginas para iniciativas locais. Busco construir
-                interfaces que resolvam problemas reais de navegação, unindo
-                código limpo e layouts responsivos.
-              </p>
-            </div>
-          </div>
-
-          <div class="reveal mt-12">
-            <a
-              href="assets/Curriculum Davi Moreira Atualizado 2025.docx"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-primary"
-            >
-              Visualizar Currículo
-              <svg
-                width="13"
-                height="13"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
+          <div class="flex gap-5">
+            <a href="#" class="text-sm font-medium text-fg flex items-center gap-1.5 hover:text-accent2 transition-colors">
+              GitHub
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+            </a>
+            <a href="#" class="text-sm font-medium text-accent2 flex items-center gap-1.5 hover:text-accent transition-colors">
+              Demonstração
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
             </a>
           </div>
         </div>
-      </section>
+      </article>
 
-      <hr class="divider mx-[8%]" />
-
-      <section id="contato-section" class="px-[8%] py-28">
-        <div class="w-full max-w-7xl mx-auto">
-          <div class="reveal">
-            <span
-              class="text-xs font-medium tracking-[0.2em] text-white/30 uppercase block mb-5"
-            >
-              Contato
-            </span>
-            <h2
-              class="text-[clamp(28px,3vw,42px)] font-semibold tracking-[-0.025em] text-white mb-4"
-            >
-              Tem um projeto em mente?
-            </h2>
-            <p
-              class="text-[17px] text-white/50 font-light leading-[1.85] mb-14 max-w-xl"
-            >
-              Envie uma mensagem diretamente ou use os canais abaixo.
-            </p>
+      <article class="reveal reveal-delay-2 group rounded-2xl border border-border bg-card/50 overflow-hidden card-hover grid md:grid-cols-2">
+        <div class="h-56 md:h-auto relative overflow-hidden bg-card2 order-1 md:order-2">
+          <div class="absolute inset-0 bg-gradient-to-bl from-accent/15 via-transparent to-transparent"></div>
+          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="260" fill="#141417"/>
+            <g opacity="0.45" stroke="#8B5CF6" stroke-width="1">
+              <circle cx="120" cy="130" r="46" fill="none"/>
+              <circle cx="120" cy="130" r="24" fill="none"/>
+              <path d="M240 70 L340 70 L340 190 L240 190 Z" fill="none"/>
+            </g>
+          </svg>
+        </div>
+        <div class="p-8 md:p-10 flex flex-col justify-center order-2 md:order-1">
+          <h3 class="font-display font-semibold text-xl md:text-2xl mb-3">Fiore Gelatto</h3>
+          <p class="text-muted text-sm md:text-base leading-relaxed mb-5">
+            Site institucional para gelateria, construído com Tailwind CSS
+            em arquivo único.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-[11px] uppercase px-2.5 py-1 rounded-full border border-border text-muted">Tailwind CSS</span>
+            <span class="text-[11px] uppercase px-2.5 py-1 rounded-full border border-border text-muted">HTML</span>
           </div>
-
-          <div class="reveal flex flex-col lg:flex-row gap-12 items-start">
-            <div class="form-card flex-1 flex flex-col gap-5">
-              <form
-                action="https://formsubmit.co/davimcoder@gmail.com"
-                method="POST"
-                class="flex flex-col gap-5"
-              >
-                <input type="hidden" name="_captcha" value="false" />
-                <input
-                  type="hidden"
-                  name="_next"
-                  value="https://seusite.github.io"
-                />
-
-                <div class="flex flex-col gap-2">
-                  <label
-                    for="name"
-                    class="text-xs font-medium text-white/40 uppercase tracking-widest"
-                    >Nome</label
-                  >
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    required
-                    placeholder="Seu nome ou empresa"
-                    class="form-input"
-                  />
-                </div>
-
-                <div class="flex flex-col gap-2">
-                  <label
-                    for="email"
-                    class="text-xs font-medium text-white/40 uppercase tracking-widest"
-                    >E-mail</label
-                  >
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    required
-                    placeholder="seu@email.com"
-                    class="form-input"
-                  />
-                </div>
-
-                <div class="flex flex-col gap-2">
-                  <label
-                    for="message"
-                    class="text-xs font-medium text-white/40 uppercase tracking-widest"
-                    >Mensagem</label
-                  >
-                  <textarea
-                    name="message"
-                    id="message"
-                    rows="5"
-                    required
-                    placeholder="Como posso ajudar no seu projeto?"
-                    class="form-input resize-none"
-                  ></textarea>
-                </div>
-
-                <button type="submit" class="btn-primary mt-2 self-start">
-                  Enviar Mensagem
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <line x1="22" y1="2" x2="11" y2="13" />
-                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                  </svg>
-                </button>
-              </form>
-            </div>
-
-            <div class="flex flex-col gap-5 lg:w-[340px] w-full">
-              <div class="channel-card">
-                <p
-                  class="text-xs tracking-[0.15em] text-white/30 uppercase mb-3"
-                >
-                  Atendimento rápido
-                </p>
-                <h3 class="text-[16px] font-semibold text-white mb-2">
-                  WhatsApp
-                </h3>
-                <p class="text-[14px] text-white/45 leading-relaxed mb-4">
-                  Para respostas imediatas, me chame no WhatsApp.
-                </p>
-                <a
-                  href="https://wa.me/5586994219032"
-                  target="_blank"
-                  class="text-[13px] font-medium text-white/70 hover:text-white transition-colors tracking-wide"
-                >
-                  Abrir conversa →
-                </a>
-              </div>
-
-              <div class="channel-card">
-                <p
-                  class="text-xs tracking-[0.15em] text-white/30 uppercase mb-3"
-                >
-                  E-mail oficial
-                </p>
-                <h3 class="text-[16px] font-semibold text-white mb-2">
-                  davimcoder@gmail.com
-                </h3>
-                <p class="text-[14px] text-white/45 leading-relaxed mb-4">
-                  Para propostas formais ou projetos mais detalhados.
-                </p>
-                <a
-                  href="mailto:davimcoder@gmail.com"
-                  class="text-[13px] font-medium text-white/70 hover:text-white transition-colors tracking-wide"
-                >
-                  Enviar e-mail →
-                </a>
-              </div>
-
-              <div
-                class="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02]"
-              >
-                <span
-                  class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"
-                ></span>
-                <span class="text-[13px] text-white/50 font-light"
-                  >Disponível para novos projetos</span
-                >
-              </div>
-            </div>
+          <div class="flex gap-5">
+            <a href="#" class="text-sm font-medium text-fg flex items-center gap-1.5 hover:text-accent2 transition-colors">
+              GitHub
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+            </a>
+            <a href="#" class="text-sm font-medium text-accent2 flex items-center gap-1.5 hover:text-accent transition-colors">
+              Demonstração
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+            </a>
           </div>
         </div>
-      </section>
-    </main>
+      </article>
 
-    <footer
-      class="text-center py-12 px-8 border-t border-white/[0.04] bg-[#040404]"
-    >
-      <p class="text-[12px] text-white/20 tracking-[0.08em] uppercase">
-        &copy; 2026 MoreiraCoder — Todos os direitos reservados
+      <article class="reveal reveal-delay-3 group rounded-2xl border border-border bg-card/50 overflow-hidden card-hover grid md:grid-cols-2">
+        <div class="h-56 md:h-auto relative overflow-hidden bg-card2 order-1">
+          <div class="absolute inset-0 bg-gradient-to-br from-accent/15 via-transparent to-transparent"></div>
+          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="260" fill="#141417"/>
+            <g opacity="0.45" stroke="#8B5CF6" stroke-width="1">
+              <rect x="70" y="80" width="80" height="110" rx="6" fill="none"/>
+              <rect x="180" y="110" width="80" height="80" rx="6" fill="none"/>
+              <rect x="290" y="130" width="60" height="60" rx="6" fill="none"/>
+            </g>
+          </svg>
+        </div>
+        <div class="p-8 md:p-10 flex flex-col justify-center order-2">
+          <h3 class="font-display font-semibold text-xl md:text-2xl mb-3">Black Gold</h3>
+          <p class="text-muted text-sm md:text-base leading-relaxed mb-5">
+            Formulário de agendamento para barbearia, com tema escuro e
+            detalhes dourados.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-[11px] uppercase px-2.5 py-1 rounded-full border border-border text-muted">HTML</span>
+            <span class="text-[11px] uppercase px-2.5 py-1 rounded-full border border-border text-muted">CSS</span>
+          </div>
+          <div class="flex gap-5">
+            <a href="#" class="text-sm font-medium text-fg flex items-center gap-1.5 hover:text-accent2 transition-colors">
+              GitHub
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+            </a>
+            <a href="#" class="text-sm font-medium text-accent2 flex items-center gap-1.5 hover:text-accent transition-colors">
+              Demonstração
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TECNOLOGIAS ============ -->
+<section id="tecnologias" class="relative py-24 md:py-28 px-6 md:px-12 border-t border-border/60">
+  <div class="max-w-8xl mx-auto">
+    <div class="reveal mb-14 max-w-2xl">
+      <p class="eyebrow text-accent2 text-xs uppercase mb-3">Stack</p>
+      <h2 class="font-display font-bold text-3xl md:text-4xl tracking-tight">Tecnologias</h2>
+    </div>
+
+    <div class="reveal reveal-delay-1 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+      <div class="tech-cell border border-border rounded-xl p-5 flex flex-col items-center gap-3 bg-card/30">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.6"><path d="M4 3l1.5 17L12 22l6.5-2L20 3H4z"/><path d="M7 7h10l-.4 4.5H8.6M8.2 12l.3 3.5 3.5 1 3.5-1 .3-3"/></svg>
+        <span class="text-[11px] text-muted">HTML5</span>
+      </div>
+      <div class="tech-cell border border-border rounded-xl p-5 flex flex-col items-center gap-3 bg-card/30">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.6"><path d="M4 3l1.5 17L12 22l6.5-2L20 3H4z"/><path d="M16 7H8l.3 4h7l-.4 4.5-3 1-3-1-.2-2"/></svg>
+        <span class="text-[11px] text-muted">CSS3</span>
+      </div>
+      <div class="tech-cell border border-border rounded-xl p-5 flex flex-col items-center gap-3 bg-card/30">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 15.5c.3.7.9 1.2 1.7 1.2 1 0 1.6-.6 1.6-1.7V9.5M14 15c.4.6 1 1 1.8 1 1 0 1.7-.5 1.7-1.3 0-.9-.7-1.2-1.7-1.6-1-.4-1.7-.8-1.7-1.7 0-.8.6-1.3 1.5-1.3.7 0 1.2.3 1.6.9"/></svg>
+        <span class="text-[11px] text-muted">JavaScript</span>
+      </div>
+      <div class="tech-cell border border-border rounded-xl p-5 flex flex-col items-center gap-3 bg-card/30">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.6"><path d="M6 12c.8-3 2.3-4.5 5-4.5 3 0 3.5 2.2 5.5 2.2 1.7 0 2.7-1 3.5-2.7-.8 3-2.3 4.5-5 4.5-3 0-3.5-2.2-5.5-2.2-1.7 0-2.7 1-3.5 2.7z"/><path d="M2 17c.8-3 2.3-4.5 5-4.5 3 0 3.5 2.2 5.5 2.2 1.7 0 2.7-1 3.5-2.7-.8 3-2.3 4.5-5 4.5-3 0-3.5-2.2-5.5-2.2-1.7 0-2.7 1-3.5 2.7z"/></svg>
+        <span class="text-[11px] text-muted">Tailwind</span>
+      </div>
+      <div class="tech-cell border border-border rounded-xl p-5 flex flex-col items-center gap-3 bg-card/30">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 4v16M4 9h16"/></svg>
+        <span class="text-[11px] text-muted">Figma</span>
+      </div>
+      <div class="tech-cell border border-dashed border-border rounded-xl p-5 flex flex-col items-center justify-center gap-1 bg-card/10 text-muted">
+        <span class="text-lg leading-none">+</span>
+        <span class="text-[11px]">Adicionar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTATO ============ -->
+<section id="contato" class="relative py-24 md:py-28 px-6 md:px-12 border-t border-border/60 overflow-hidden">
+  <div class="absolute bottom-0 right-1/3 w-[500px] h-[300px] glow-soft pointer-events-none"></div>
+  <div class="max-w-8xl mx-auto relative grid md:grid-cols-12 gap-12">
+    <div class="reveal md:col-span-5">
+      <p class="eyebrow text-accent2 text-xs uppercase mb-3">Contato</p>
+      <h2 class="font-display font-bold text-3xl md:text-4xl tracking-tight mb-5">
+        Vamos conversar
+      </h2>
+      <p class="text-muted leading-relaxed mb-10 max-w-sm">
+        [Frase curta opcional sobre como prefere ser contatado.]
       </p>
-    </footer>
 
-    <script>
-      function toggleMenu() {
-        const menu = document.getElementById("mobile-menu");
-        menu.classList.toggle("open");
+      <div class="flex flex-col gap-4">
+        <a href="mailto:[seu-email@exemplo.com]" class="flex items-center gap-3 text-sm text-muted hover:text-fg transition-colors group">
+          <span class="w-9 h-9 rounded-lg border border-border flex items-center justify-center group-hover:border-accent transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </span>
+          [seu-email@exemplo.com]
+        </a>
+        <a href="#" class="flex items-center gap-3 text-sm text-muted hover:text-fg transition-colors group">
+          <span class="w-9 h-9 rounded-lg border border-border flex items-center justify-center group-hover:border-accent transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 00-1.3-3.2 4.2 4.2 0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 00-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 00-.1 3.2A4.6 4.6 0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+          </span>
+          [github.com/seu-usuario]
+        </a>
+        <a href="#" class="flex items-center gap-3 text-sm text-muted hover:text-fg transition-colors group">
+          <span class="w-9 h-9 rounded-lg border border-border flex items-center justify-center group-hover:border-accent transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/><path d="M10 9h4v2a4 4 0 018 0v10h-4v-9a2 2 0 00-4 0v9h-4z"/></svg>
+          </span>
+          [linkedin.com/in/seu-usuario]
+        </a>
+      </div>
+    </div>
+
+    <form class="reveal reveal-delay-1 md:col-span-6 md:col-start-7 flex flex-col gap-5">
+      <div>
+        <label for="nome" class="text-[11px] uppercase text-muted block mb-2">Nome</label>
+        <input id="nome" type="text" placeholder="Seu nome" class="w-full bg-card/50 border border-border rounded-xl px-4 py-3 text-sm text-fg placeholder:text-muted/60 transition-colors">
+      </div>
+      <div>
+        <label for="email" class="text-[11px] uppercase text-muted block mb-2">E-mail</label>
+        <input id="email" type="email" placeholder="seu@email.com" class="w-full bg-card/50 border border-border rounded-xl px-4 py-3 text-sm text-fg placeholder:text-muted/60 transition-colors">
+      </div>
+      <div>
+        <label for="mensagem" class="text-[11px] uppercase text-muted block mb-2">Mensagem</label>
+        <textarea id="mensagem" rows="4" placeholder="Conte sobre o seu projeto" class="w-full bg-card/50 border border-border rounded-xl px-4 py-3 text-sm text-fg placeholder:text-muted/60 transition-colors resize-none"></textarea>
+      </div>
+      <button type="submit" class="btn-primary text-fg font-medium px-7 py-3.5 rounded-full text-sm self-start mt-2">
+        Enviar mensagem
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-border/60 py-8 px-6 md:px-12">
+  <div class="max-w-8xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted">
+    <span>© 2026 Moreiracoder.</span>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+  const revealEls = document.querySelectorAll('.reveal:not(.in-view)');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
       }
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-            }
-          });
-        },
-        { threshold: 0.12 },
-      );
-
-      document
-        .querySelectorAll(".reveal")
-        .forEach((el) => observer.observe(el));
-
-      const navbar = document.querySelector("nav");
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 60) {
-          navbar.style.padding = "10px 32px";
-        } else {
-          navbar.style.padding = "16px 32px";
-        }
-      });
-    </script>
-  </body>
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
 </html>
